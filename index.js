@@ -1,3 +1,4 @@
+
  const TelegramBot = require('node-telegram-bot-api')
  const debug = require('./helpers')
  const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
@@ -13,16 +14,28 @@
 })
 
 
+// вывод видео с хостинга
+ bot.onText(/\/v1/, msg => {
+     const chatId = msg.chat.id
 
- // https://developers.google.com/speed/webp/gallery1
- bot.onText(/\/s1/, msg => {
-     bot.sendSticker(msg.chat.id, './sticker.webp')
+     bot.sendMessage(chatId, 'Sending video...')
+     bot.sendVideo(chatId, 'http://techslides.com/demos/sample-videos/small.mp4')
  })
+     // вывод видео с локального диска
+ bot.onText(/\/v2/, msg => {
+     const chatId = msg.chat.id
+     bot.sendMessage(chatId, 'Sending video...')
+     bot.sendVideo(chatId, './small.mp4')
+ })
+ // вывод видео с локального диска
+ bot.onText(/\/v3/, msg => {
+     const chatId = msg.chat.id
+     bot.sendMessage(chatId, 'Sending video...')
 
- bot.onText(/\/s2/, msg => {
-    fs.readFile(__dirname + '/sticker.webp', (err, sticker) => {
-        bot.sendSticker(msg.chat.id, sticker)
-    })
+     fs.readFile(__dirname + '/small.mp4', (err, video) => {
+         bot.sendVideoNote(chatId, video)
+     })
+
  })
 
 
