@@ -12,21 +12,22 @@
     }
 })
 
+ // bot.onText(/\/audio/, msg => {
+ //
+ //   bot.sendAudio(msg.chat.id, './wind_of_change.mp3')
+ //
+ // })
 
- bot.onText(/\/pic/, msg => {
-    //выводим фото
-     bot.sendPhoto(msg.chat.id, fs.readFileSync(__dirname + '/pictehno-logo.png'))
+ bot.onText(/\/audio2/, msg => {
 
- })
+     bot.sendMessage(msg.chat.id, 'Start audio uploading...')
 
- bot.onText(/\/pic2/, msg => {
-    //выводим фото с описанием
-     bot.sendPhoto(msg.chat.id, './pictehno-logo.png', {
-         caption: 'This is cat photo'
+     fs.readFile(__dirname + '/wind_of_change.mp3', (err, data) => {
+         bot.sendAudio(msg.chat.id, data).then(() => {
+             bot.sendMessage(msg.chat.id, 'Uploading finish')
+         })
      })
-
  })
-
 
 
 
