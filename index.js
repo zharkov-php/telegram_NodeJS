@@ -15,7 +15,9 @@
 
  bot.on('message', msg => {
 
-    bot.sendMessage(msg.chat.id, `http://www.aerovis.aero/ru/about-us-ru/`)
+    bot.sendMessage(msg.chat.id, `http://www.aerovis.aero/ru/about-us-ru/`, {
+        disable_web_page_preview: true
+    })
 })
 
 
