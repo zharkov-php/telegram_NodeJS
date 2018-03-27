@@ -14,10 +14,12 @@
 
 
  bot.on('message', msg => {
+    setTimeout(() => {
+        bot.sendMessage(msg.chat.id, `http://www.aerovis.aero/ru/about-us-ru/`, {
+            disable_web_page_preview: true
+        })
+    }, 4000)
 
-    bot.sendMessage(msg.chat.id, `http://www.aerovis.aero/ru/about-us-ru/`, {
-        disable_web_page_preview: true
-    })
 })
 
 
