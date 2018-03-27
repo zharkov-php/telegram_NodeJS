@@ -12,22 +12,21 @@ const bot = new TelegramBot(TOKEN, {
     }
 })
 
-//Выводит debug
-     bot.onText(/\/contact1/, msg => {
-    const {id} = msg.chat
-    bot.sendMessage(id, debug(msg))
-})
-
-//выводит текст, который ввведет пользователе, после кнопки
-bot.onText(/\/contact1 (.+)/, (msg, [source, match]) => {
-    const {id} = msg.chat
-    bot.sendMessage(id, debug(match))
-})
-
-//выводит в программе что смс отправленно
 bot.on('message', msg => {
-    bot.sendMessage(msg.chat.id, 'Сообщение отправленно')
+
+    const MyHtml = `
+<strong>Hello, ${msg.from.first_name}</strong>
+<strong>Твое имя ${msg.from.last_name}</strong>
+<strong>Твой ID  ${msg.from.id}</strong>
+<pre>${debug(msg)}</pre>
+`
+    bot.sendMessage(msg.chat.id, MyHtml, {
+        parse_mode: 'HTML'
+    })
 })
+
+
+
 
 
 
