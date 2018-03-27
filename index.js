@@ -14,13 +14,34 @@
 })
 
 
- bot.onText(/\/contact/, msg => {
+ bot.onText(/\/pay/, msg => {
 
-     bot.sendContact(msg.chat.id, '+380555555', 'Андрей', {
-         last_name: 'Жарков'
-     })
+     const chatId = msg.chat.id
+
+     
+     bot.sendInvoice(
+         chatId,
+         'Audi A4',
+         'Best car ever in telegram bot',
+         'payload',
+         '381764678:TEST:5094',
+         'SOME_RANDOM_STRING_KEY',
+         'RUB',
+         [
+             {
+                 label: 'audi_a4',
+                 amount: 30000
+             }
+         ],
+         {
+             photo_url: 'https://a.d-cd.net/566858as-480.jpg',
+             need_name: true,
+             is_flexible: true
+         }
+     )
 
  })
+
 
 
 
