@@ -1,7 +1,8 @@
-const TelegramBot = require('node-telegram-bot-api')
-const debug = require('./helpers')
-const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
-const bot = new TelegramBot(TOKEN, {
+ const TelegramBot = require('node-telegram-bot-api')
+ const debug = require('./helpers')
+ const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
+ const fs = require('fs')
+ const bot = new TelegramBot(TOKEN, {
     polling: {
         interval: 300,//интервал загрукзки между клинтом и сервером
         autoStart: true,//если бот незапущен, он запоминает команды и потом после запуска ответит
@@ -12,71 +13,23 @@ const bot = new TelegramBot(TOKEN, {
 })
 
 
-const inline_keyboard = [
-    [
-        {
-            text: 'Forward',
-            callback_data: 'forward'
-        },
-        {
-            text: 'Ответ',
-            callback_data: 'reply'
-        }
-    ],
-    [
-        {
-            text: 'Edit',
-            callback_data: 'edit'
-        },
-        {
-            text: 'Delete',
-            callback_data: 'delete'
-        }
-    ]
-]
+ bot.onText(/\/pic/, msg => {
+    //выводим фото
+     bot.sendPhoto(msg.chat.id, fs.readFileSync(__dirname + '/pictehno-logo.png'))
 
-bot.on('callback_query', query => {
+ })
 
-    const { chat, message_id, text } = query.message
+ bot.onText(/\/pic2/, msg => {
+    //выводим фото с описанием
+     bot.sendPhoto(msg.chat.id, './pictehno-logo.png', {
+         caption: 'This is cat photo'
+     })
 
-    switch (query.data) {
-        case 'forward':
-            // куда, откуда, что
-            bot.forwardMessage(chat.id, chat.id, message_id)
-            break
-        case  'reply':
-            bot.sendMessage(chat.id, `Отвечаю на сообщение текстом...ла-ла-ала`, {
-                reply_to_message_id: message_id
-            })
-            break
-        case 'edit':
-            bot.editMessageText(`${text} (edited)`, {
-                chat_id: chat.id,
-                message_id: message_id,
-                reply_markup:{inline_keyboard}
-            })
-            break
-        case 'delete':
-            bot.deleteMessage(chat.id, message_id)
-            break
-    }
+ })
 
-    bot.answerCallbackQuery({
-        callback_query_id: query.id
-    })
-})
 
-bot.onText(/\/start/, (msg, [source, match]) => {
 
-    const chatId = msg.chat.id
 
-    bot.sendMessage(chatId, 'Keyboard', {
-        reply_markup: {
-            inline_keyboard
-        }
-    })
-
-})
 
 
 
