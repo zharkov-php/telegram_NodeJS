@@ -16,7 +16,13 @@ console.log('Сервер запущен')//вывод в консоле соо�
 
 bot.on('message', msg => {
     const {id} = msg.chat
+    bot.sendMessage(id, debug(msg))
+
+    if (msg.text.toLowerCase() === 'hello') {
+        bot.sendMessage(id, `Hello, ${msg.from.first_name}`)
+    } else {
         bot.sendMessage(id, debug(msg))
+    }
 
 //console.log(msg)
    // bot.sendMessage(msg.chat.id, 'Здравствуйте!!!, ' + msg.from.first_name +  ' меня зовут Алешка, я Ваш персональный менеджер!!! ')
