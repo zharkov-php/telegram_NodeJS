@@ -56,6 +56,9 @@ bot.on('callback_query', query => {
                 reply_markup:{inline_keyboard}
             })
             break
+        case 'delete':
+            bot.deleteMessage(chat.id, message_id)
+            break
     }
 
     bot.answerCallbackQuery({
