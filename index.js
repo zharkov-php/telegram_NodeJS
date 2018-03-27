@@ -1,8 +1,7 @@
- const TelegramBot = require('node-telegram-bot-api')
- const debug = require('./helpers')
- const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
-
- const bot = new TelegramBot(TOKEN, {
+const TelegramBot = require('node-telegram-bot-api')
+const debug = require('./helpers')
+const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
+const bot = new TelegramBot(TOKEN, {
     polling: {
         interval: 300,//интервал загрукзки между клинтом и сервером
         autoStart: true,//если бот незапущен, он запоминает команды и потом после запуска ответит
@@ -12,13 +11,20 @@
     }
 })
 
+bot.on('message', msg => {
 
- bot.on('message', msg => {
-    setTimeout(() => {
-        bot.sendMessage(msg.chat.id, `http://www.aerovis.aero/ru/about-us-ru/`, {
-            disable_web_page_preview: true
+    const chatId = msg.chat.id
+
+    bot.sendMessage(chatId, 'Моя Клавиатура', {
+            reply_markup: {
+                keyboard: [
+                    ['Кнопка #1', 'Кнопка #2'],
+                    ['Кнопка #3'],
+                    ['Кнопка #4', 'Кнопка #5', 'Кнопка #6'],
+                ]
+            }
         })
-    }, 4000)
+
 
 })
 
