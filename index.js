@@ -1,3 +1,5 @@
+
+
 const TelegramBot = require('node-telegram-bot-api')
 const debug = require('./helpers')
 const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
@@ -12,18 +14,40 @@ const bot = new TelegramBot(TOKEN, {
 })
 
 bot.on('message', msg => {
-
     const chatId = msg.chat.id
 
-    bot.sendMessage(chatId, 'Моя Клавиатура', {
+    if (msg.text === 'Закрыть'){ //если Кнопка Закрыть
+    bot.sendMessage(chatId, 'Закрываю клавиатуру', {
+        reply_markup: {
+            remove_keyboard: true
+        }
+    })
+    }else if (msg.text === 'Ответить'){ //если Кнопка Ответить
+        bot.sendMessage(chatId, 'Отвечаю Вам', {
             reply_markup: {
-                keyboard: [
-                    ['Кнопка #1', 'Кнопка #2'],
-                    ['Кнопка #3'],
-                    ['Кнопка #4', 'Кнопка #5', 'Кнопка #6'],
-                ]
+                force_reply: true
             }
         })
+    }else {
+        bot.sendMessage(chatId, 'Моя Клавиатура', {
+            reply_markup: {
+                keyboard: [
+                    [{
+                    text: 'Отправить местоположение',//Кнопка оправить местоположение
+                        request_location: true
+                    }],
+                    ['Ответить', 'Закрыть'],//Кнопки Ответить и Закрыть, работают по условиям выше указанным
+                    [{
+                    text: 'Отправить контакт',//Кнопка Оправить контакт
+                        request_contact: true
+                    }]
+                ],
+                one_time_keyboard: true //ЗАКРЫВАЕМ КЛАВИАТУРУ ПОСЛЕ ВЫБОРА ЛЮБОЙ КНОПКИ
+            }
+        })
+    }
+
+
 
 
 })
