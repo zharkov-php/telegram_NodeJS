@@ -1,5 +1,3 @@
-
-
 const TelegramBot = require('node-telegram-bot-api')
 const debug = require('./helpers')
 const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
@@ -51,7 +49,13 @@ bot.on('callback_query', query => {
                 reply_to_message_id: message_id
             })
             break
-       
+        case 'edit':
+            bot.editMessageText(`${text} (edited)`, {
+                chat_id: chat.id,
+                message_id: message_id,
+                reply_markup:{inline_keyboard}
+            })
+            break
     }
 
     bot.answerCallbackQuery({
