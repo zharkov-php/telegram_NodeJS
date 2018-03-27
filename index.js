@@ -24,6 +24,14 @@ bot.on('message', msg => {
         bot.sendMessage(id, debug(msg))
     }
 
+    bot.sendMessage(id, debug(msg))
+        .then(() => {
+            console.log('Сообщение отправленно')
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+
 //console.log(msg)
    // bot.sendMessage(msg.chat.id, 'Здравствуйте!!!, ' + msg.from.first_name +  ' меня зовут Алешка, я Ваш персональный менеджер!!! ')
     //bot.sendMessage(msg.chat.id, 'Чем могу Вам помочь?   '  + msg.from.first_name + '  выберите в меню вопрос по разделам ')
