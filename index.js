@@ -21,7 +21,7 @@ const inline_keyboard = [
             callback_data: 'forward'
         },
         {
-            text: 'Reply',
+            text: 'Ответ',
             callback_data: 'reply'
         }
     ],
@@ -46,6 +46,12 @@ bot.on('callback_query', query => {
             // куда, откуда, что
             bot.forwardMessage(chat.id, chat.id, message_id)
             break
+        case  'reply':
+            bot.sendMessage(chat.id, `Отвечаю на сообщение текстом...ла-ла-ала`, {
+                reply_to_message_id: message_id
+            })
+            break
+       
     }
 
     bot.answerCallbackQuery({
