@@ -1,3 +1,4 @@
+
 const TelegramBot = require('node-telegram-bot-api')
 const debug = require('./helpers')
 const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
@@ -12,42 +13,26 @@ const bot = new TelegramBot(TOKEN, {
 })
 
 
-bot.on('message', msg => {
-    const chatId = msg.chat.id
+bot.on('inline_query', query => { //вывод результата
+    const results = []
 
-    bot.sendMessage(chatId, 'Моя Инлайн клавиатура-меню', {
-        reply_markup: {
-            inline_keyboard: [
-               [
-                   {
-                       text: 'Google',//Кнопка гугл ссылка
-                       url: 'https://www.google.com/'
-                   }
-               ],
-                [
-                    {
-                        text: 'Second',// первая кнопка
-                        callback_data: '1'
-                    },
-                    {
-                        text: 'First',//Вторая кнопка
-                        callback_data: 'First'
-                    }
-                ]
-            ]
-        }
-    })
+    for (let i = 0; i < 10; i++) {
+        results.push({
+            type:'article',
+            id: i.toString(),
+            title:'Title' + i,
+            input_message_content: {
+                message_text: `Article #${i+1}`
+            }
+        })
+    }
+    bot.answerInlineQuery(query.id, results,{
+        cache_time: 0
+   // bot.sendMessage(query.message.chat.id, debug(query))//вывод распечаткой debug
 
-
-
+   // bot.answerCallbackQuery(query.id, `${query.data}`)//Вывод алертом
 })
-
-bot.on('callback_query', query => { //вывод результата
-    bot.sendMessage(query.message.chat.id, debug(query))//вывод распечаткой debug
-
-    bot.answerCallbackQuery(query.id, `${query.data}`)//Вывод алертом
 })
-
 
 
 
