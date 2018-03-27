@@ -1,3 +1,4 @@
+
  const TelegramBot = require('node-telegram-bot-api')
  const debug = require('./helpers')
  const TOKEN = '595808254:AAHjcdRI0-wohBLK9_xUf7PV2cbWG_Kse_w'
@@ -13,9 +14,11 @@
 })
 
 
- bot.onText(/\/loc/, msg => {
+ bot.onText(/\/contact/, msg => {
 
-     bot.sendLocation(msg.chat.id, 59.928831, 30.360586)
+     bot.sendContact(msg.chat.id, '+380555555', 'Андрей', {
+         last_name: 'Жарков'
+     })
 
  })
 
