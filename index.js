@@ -12,29 +12,21 @@ const bot = new TelegramBot(TOKEN, {
     }
 })
 
-console.log('Сервер запущен')//вывод в консоле сообщения
-
-bot.on('message', msg => {
+//Выводит debug
+     bot.onText(/\/contact1/, msg => {
     const {id} = msg.chat
     bot.sendMessage(id, debug(msg))
+})
 
-    if (msg.text.toLowerCase() === 'hello') {
-        bot.sendMessage(id, `Hello, ${msg.from.first_name}`)
-    } else {
-        bot.sendMessage(id, debug(msg))
-    }
+//выводит текст, который ввведет пользователе, после кнопки
+bot.onText(/\/contact1 (.+)/, (msg, [source, match]) => {
+    const {id} = msg.chat
+    bot.sendMessage(id, debug(match))
+})
 
-    bot.sendMessage(id, debug(msg))
-        .then(() => {
-            console.log('Сообщение отправленно')
-        })
-        .catch((error) => {
-            console.error(error)
-        })
-
-//console.log(msg)
-   // bot.sendMessage(msg.chat.id, 'Здравствуйте!!!, ' + msg.from.first_name +  ' меня зовут Алешка, я Ваш персональный менеджер!!! ')
-    //bot.sendMessage(msg.chat.id, 'Чем могу Вам помочь?   '  + msg.from.first_name + '  выберите в меню вопрос по разделам ')
+//выводит в программе что смс отправленно
+bot.on('message', msg => {
+    bot.sendMessage(msg.chat.id, 'Сообщение отправленно')
 })
 
 
